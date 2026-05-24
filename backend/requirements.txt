@@ -1,0 +1,76 @@
+# =========================
+# CORE BACKEND
+# =========================
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+
+# =========================
+# DATA / ML
+# =========================
+numpy
+scipy
+scikit-learn
+pandas
+
+# =========================
+# INFORMATION RETRIEVAL
+# =========================
+rank-bm25
+faiss-cpu
+
+# =========================
+# TRANSFORMERS / EMBEDDINGS
+# =========================
+torch --index-url https://download.pytorch.org/whl/cpu
+transformers
+sentence-transformers
+tokenizers
+
+# =========================
+# OPTIONAL LIGHT FINETUNING
+# =========================
+peft
+accelerate
+
+# =========================
+# SCIENTIFIC NLP
+# =========================
+spacy
+scispacy
+
+# =========================
+# DATABASE / STORAGE
+# =========================
+sqlalchemy
+aiosqlite
+
+# =========================
+# API / FILES
+# =========================
+httpx
+aiofiles
+
+# =========================
+# EVALUATION
+# =========================
+evaluate
+
+# =========================
+# OPTIONAL SEARCH ENGINE
+# =========================
+elasticsearch
+
+# =========================
+# DEV TOOLS
+# =========================
+pytest
+black
+tqdm
+
+# =========================
+# VISUALIZATION
+# =========================
+umap-learn
+plotly
