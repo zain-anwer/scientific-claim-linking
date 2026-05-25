@@ -6,7 +6,7 @@ nlp = spacy.load('en_core_sci_sm')
 nlp.add_pipe(
     "scispacy_linker",
     config={
-        "linker_name": "mesh",
+        "linker_name": "umls",
         "resolve_abbreviations": True,
         "threshold": 0.85,
         "max_entities_per_mention": 1

@@ -48,7 +48,7 @@ def build_faiss_index():
 
     df = pd.read_csv(BASE_DIR.parent.parent/'cleaned_metadata.csv')
     texts = df['embedding_string'].fillna('').tolist()
-    cord_uids = df['cord_uid'].fillna('').tolist()
+    ids = df['id'].fillna('').tolist()
 
     BATCH_SIZE = 16
     batched_embeddings = []
@@ -73,7 +73,7 @@ def build_faiss_index():
 
     # saving uids for querying
     with open(INDEX_DIR/'uids.pkl','wb') as f:
-        pickle.dump(cord_uids,f)
+        pickle.dump(ids,f)
 
     print('FAISS index generated successfully')
 

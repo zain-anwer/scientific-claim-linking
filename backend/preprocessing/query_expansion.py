@@ -7,12 +7,26 @@ from scispacy.linking import EntityLinker
 
 PIPELINE_PATH = Path(__file__).resolve().parent.parent / 'pipelines/scispacy_linker_pipeline'
 
+"""
 if not PIPELINE_PATH.exists():
     print('Pipeline not found!! Aborting Program...')
     raise SystemExit
-
+"""
+    
 # loading the pipeline with the NER model and linker
-nlp = spacy.load(PIPELINE_PATH)
+# nlp = spacy.load(PIPELINE_PATH)
+
+nlp = spacy.load("en_core_sci_sm")
+nlp.add_pipe(
+    "scispacy_linker",
+    config = {
+        "linker_name": "umls",
+        "resolve_abbreviations" : True,
+        "threshold": 0.85,
+        "max_entities_per_mention": 1
+    }
+)
+
 
 linker = nlp.get_pipe("scispacy_linker")
 

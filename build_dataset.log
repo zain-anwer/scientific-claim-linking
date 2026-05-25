@@ -1,0 +1,94 @@
+2026-05-25 02:07:41,989  INFO      ============================================================
+2026-05-25 02:07:41,990  INFO      Scientific Claim Linking Dataset Builder
+2026-05-25 02:07:41,990  INFO      Target: 20,000 papers | Output: generated_metadata.jsonl
+2026-05-25 02:07:41,991  INFO      ============================================================
+2026-05-25 02:07:41,991  INFO      
+Domain: BIOMEDICAL_HEALTH (target=3500)
+2026-05-25 02:07:41,992  INFO        Core medical/health claims — drugs, disease, treatment
+2026-05-25 02:09:27,070  INFO        Domain total: 3500 papers (running total: 3500)
+2026-05-25 02:09:27,070  INFO      
+Domain: NUTRITION_FOOD_SCIENCE (target=2000)
+2026-05-25 02:09:27,073  INFO        Diet, supplements, food safety claims
+2026-05-25 02:10:38,958  INFO        Domain total: 2000 papers (running total: 5500)
+2026-05-25 02:10:38,959  INFO      
+Domain: EPIDEMIOLOGY_PUBLIC_HEALTH (target=2500)
+2026-05-25 02:10:38,960  INFO        Disease prevalence, risk factors, population health
+2026-05-25 02:10:46,401  INFO        Domain total: 0 papers (running total: 5500)
+2026-05-25 02:10:46,401  INFO      
+Domain: NEUROSCIENCE_PSYCHOLOGY (target=2000)
+2026-05-25 02:10:46,404  INFO        Mental health, cognitive, behavioural claims
+2026-05-25 02:11:52,173  INFO        Domain total: 2000 papers (running total: 7500)
+2026-05-25 02:11:52,174  INFO      
+Domain: IMMUNOLOGY_VACCINES (target=2500)
+2026-05-25 02:11:52,174  INFO        Vaccine efficacy, immune response, pathogen claims
+2026-05-25 02:12:00,332  INFO        Domain total: 0 papers (running total: 7500)
+2026-05-25 02:12:00,332  INFO      
+Domain: ENVIRONMENTAL_CLIMATE (target=2000)
+2026-05-25 02:12:00,332  INFO        Climate, pollution, radiation, chemical exposure claims
+2026-05-25 02:12:09,606  INFO        Domain total: 0 papers (running total: 7500)
+2026-05-25 02:12:09,606  INFO      
+Domain: BIOLOGY_GENETICS (target=2500)
+2026-05-25 02:12:09,607  INFO        GMO, CRISPR, evolution, microbiome claims
+2026-05-25 02:13:51,707  INFO        Domain total: 2500 papers (running total: 10000)
+2026-05-25 02:13:51,708  INFO      
+Domain: CHEMISTRY_TOXICOLOGY (target=3000)
+2026-05-25 02:13:51,708  INFO        Chemical exposure, toxins, heavy metals — covers physics-adjacent claims like EMF, fluoride
+2026-05-25 02:15:41,571  INFO        Domain total: 3000 papers (running total: 13000)
+2026-05-25 02:15:42,887  INFO      
+============================================================
+2026-05-25 02:15:42,887  INFO      DONE. Total papers written: 13,000
+2026-05-25 02:15:42,888  INFO      Output: generated_metadata.jsonl
+2026-05-25 02:15:42,888  INFO      ============================================================
+2026-05-25 02:15:42,888  INFO      
+Domain breakdown:
+2026-05-25 02:15:42,888  INFO        biomedical_health                    3500
+2026-05-25 02:15:42,888  INFO            high_cited_recent                875
+2026-05-25 02:15:42,888  INFO            high_cited_older                 875
+2026-05-25 02:15:42,888  INFO            mid_cited_recent                1050
+2026-05-25 02:15:42,888  INFO            low_cited_recent                 700
+2026-05-25 02:15:42,888  INFO        nutrition_food_science               2000
+2026-05-25 02:15:42,888  INFO            high_cited_recent                500
+2026-05-25 02:15:42,888  INFO            high_cited_older                 500
+2026-05-25 02:15:42,888  INFO            mid_cited_recent                 600
+2026-05-25 02:15:42,888  INFO            low_cited_recent                 400
+2026-05-25 02:15:42,888  INFO        epidemiology_public_health              0
+2026-05-25 02:15:42,895  INFO            high_cited_recent                  0
+2026-05-25 02:15:42,895  INFO            high_cited_older                   0
+2026-05-25 02:15:42,896  INFO            mid_cited_recent                   0
+2026-05-25 02:15:42,896  INFO            low_cited_recent                   0
+2026-05-25 02:15:42,896  INFO        neuroscience_psychology              2000
+2026-05-25 02:15:42,896  INFO            high_cited_recent                500
+2026-05-25 02:15:42,896  INFO            high_cited_older                 500
+2026-05-25 02:15:42,896  INFO            mid_cited_recent                 600
+2026-05-25 02:15:42,896  INFO            low_cited_recent                 400
+2026-05-25 02:15:42,896  INFO        immunology_vaccines                     0
+2026-05-25 02:15:42,896  INFO            high_cited_recent                  0
+2026-05-25 02:15:42,896  INFO            high_cited_older                   0
+2026-05-25 02:15:42,896  INFO            mid_cited_recent                   0
+2026-05-25 02:15:42,896  INFO            low_cited_recent                   0
+2026-05-25 02:15:42,896  INFO        environmental_climate                   0
+2026-05-25 02:15:42,896  INFO            high_cited_recent                  0
+2026-05-25 02:15:42,896  INFO            high_cited_older                   0
+2026-05-25 02:15:42,896  INFO            mid_cited_recent                   0
+2026-05-25 02:15:42,904  INFO            low_cited_recent                   0
+2026-05-25 02:15:42,904  INFO        biology_genetics                     2500
+2026-05-25 02:15:42,904  INFO            high_cited_recent                625
+2026-05-25 02:15:42,904  INFO            high_cited_older                 625
+2026-05-25 02:15:42,904  INFO            mid_cited_recent                 750
+2026-05-25 02:15:42,904  INFO            low_cited_recent                 500
+2026-05-25 02:15:42,904  INFO        chemistry_toxicology                 3000
+2026-05-25 02:15:42,904  INFO            high_cited_recent                750
+2026-05-25 02:15:42,904  INFO            high_cited_older                 750
+2026-05-25 02:15:42,904  INFO            mid_cited_recent                 900
+2026-05-25 02:15:42,904  INFO            low_cited_recent                 600
+2026-05-25 02:15:42,916  INFO      
+Year distribution:
+2026-05-25 02:15:42,916  INFO        2021–2025    7192  (55.3%)
+2026-05-25 02:15:42,924  INFO        2018–2020    2558  (19.7%)
+2026-05-25 02:15:42,924  INFO        2010–2017     937  (7.2%)
+2026-05-25 02:15:42,924  INFO        2000–2009    1408  (10.8%)
+2026-05-25 02:15:42,924  INFO        1990–1999     905  (7.0%)
+2026-05-25 02:15:42,932  INFO      
+Citation distribution:
+2026-05-25 02:15:42,932  INFO        10–99       3877  (29.8%)
+2026-05-25 02:15:42,932  INFO        1–9         2600  (20.0%)
