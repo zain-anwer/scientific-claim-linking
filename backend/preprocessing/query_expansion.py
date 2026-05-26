@@ -1,3 +1,10 @@
+# ------------------ INITIAL CONFIG ----------------------- #
+
+CHOICE = input("Enter linker type (umls or mesh) : ")
+
+# --------------------------------------------------------- # 
+
+
 # tokenization -> medical entity selection (NER) -> synonym matchup (linking)
 
 import spacy 
@@ -19,7 +26,7 @@ nlp = spacy.load("en_core_sci_sm")
 nlp.add_pipe(
     "scispacy_linker",
     config = {
-        "linker_name": "umls",
+        "linker_name": CHOICE,
         "resolve_abbreviations" : True,
         "threshold": 0.85,
         "max_entities_per_mention": 1
@@ -37,6 +44,26 @@ def query_expansion(query : str) -> str:
     print('Entities Recognized: ')
 
     for i,entity in enumerate(doc.ents):
+
+        # conversational denoising through Part Of Speech (POS) tagging to prevent useless entity recognition 
+
+        # check POS tag of the root word of the entity
+        # if the core word is an interjection (e.g., "dude") or pronoun, drop it
+        if entity.root.pos_ in {"INTJ", "PRON", "VERB"}:
+            continue
+            
+        # drop entities that are purely numbers or generic symbols
+        if entity.text.isdigit() or entity.root.pos_ == "SYM":
+            continue
+            
+        # check if it's an abstract noun acting as a filler
+        # "attention" in "pay attention to" usually lacks specific modifiers
+        if entity.text.lower() in ["attention", "theory", "level", "study"]:
+            # If it doesn't have an adjective or noun modifier attached, skip it
+            ancestors_pos = [token.pos_ for token in entity.root.ancestors]
+            if "VERB" in ancestors_pos and not any(t.pos_ in {"ADJ", "NOUN"} for t in entity):
+                continue
+
         print(i+1,'th entity: ',entity.text)
 
         # (concept_id, score) pairs
@@ -47,10 +74,14 @@ def query_expansion(query : str) -> str:
         
             concept = linker.kb.cui_to_entity[concept_id]
         
-            # only take top ten aliases
-            for alias in concept.aliases[:10]:
-                expanded_terms.add(alias)
+            # TRYING TO DECREASE NOISE THROUGH CANONICAL TERMS AND LESSER ALIASES
 
+            # add the highly accurate canonical anchor term
+            expanded_terms.add(concept.canonical_name)
+
+            # grabbing only the top 2 highly correlated aliases instead of 10
+            for alias in concept.aliases[:2]:
+                expanded_terms.add(alias)
 
     query = query + " " + " ".join(set(expanded_terms))                
 

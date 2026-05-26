@@ -1,6 +1,6 @@
 import faiss
 from pathlib import Path
-from utils.embeddings import generate_embeddings
+from preprocessing.embeddings import generate_embeddings
 
 BASE_DIR = Path(__file__).resolve().parent
 IDX_PATH = BASE_DIR.parent / 'cord19_indexes'

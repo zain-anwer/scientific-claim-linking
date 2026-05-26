@@ -1,11 +1,18 @@
+# ----------------- INITIAL CONFIG --------------------- #
+
+CHOICE = input('Use cross encoder reranking ? (yes/no): ')
+K = int(input('Enter the value of query set to be used (1 - 1446): '))
+
+# ------------------------------------------------------ #
+
 import numpy as np
 import pandas as pd
 from pathlib import Path
 
 from preprocessing.query_expansion import query_expansion
-from utils.reciprocal_rank import reciprocal_rank
-from utils.reciprocal_rank_fusion import reciprocal_rank_fusion
-from utils.reranking import cross_encoder_reranking
+from evaluation_metrics.reciprocal_rank import reciprocal_rank
+from postprocessing.reciprocal_rank_fusion import reciprocal_rank_fusion
+from postprocessing.reranking import cross_encoder_reranking
 from utils.bm25_search import get_top_bm25_results
 from utils.semantic_search import get_top_semantic_results
 
@@ -26,9 +33,10 @@ texts = df['embedding_string'].tolist()
 
 mrr_list = []
 
-choice = input('Use Cross Encoder? : ')
-
 for i,query in enumerate(query_set):
+
+    if i >= K:
+        break
 
     expanded_query = query_expansion(query)
     
@@ -39,7 +47,7 @@ for i,query in enumerate(query_set):
     # combing results through RFF
     idx_list = reciprocal_rank_fusion(list1,list2)
 
-    if choice == 'yes':
+    if CHOICE == 'yes':
         reranked_idx = cross_encoder_reranking(idx_list,texts,query)
     else:
         reranked_idx = idx_list

@@ -7,6 +7,7 @@ Since the query in question is a social media post we propose the following
 
 """
 
+import unicodedata
 import emoji
 import re
 
@@ -57,6 +58,15 @@ SOCIAL_STOPWORDS = {
     "link", "bio", "dm"
 }
 
+def clean_unicode_and_layout(text: str) -> str:
+    # Normalize unicode (handles hidden formatting tokens)
+    text = unicodedata.normalize('NFKC', text)
+    # Strip URLs
+    text = re.sub(r'https?://\S+|www\.\S+', '', text)
+    # Strip Twitter/X style artifacts like pipes used for layout
+    text = re.sub(r'\|', ' ', text)
+    return text
+
 def remove_emojis(text : str) -> str:
     text = emoji.replace_emoji(text,"")
     return re.sub(r'\s+',' ',text)
@@ -98,14 +108,23 @@ def normalize_query(query : str) -> list:
     # converting everything to lowercase
     query = query.lower()
 
-    # remove elongation
-    query = remove_elongation(query)
-
     # removing hashtags and mentions
     query = re.sub(r'[#@]\w+','',query)
 
+    # remove elongation
+    query = remove_elongation(query)
+
     # remove emojis
     query = remove_emojis(query)
+
+    # removing stray formatting/layout characters
+    query = clean_unicode_and_layout(query)
+    
+    # punctuation cleanup 
+    # Ensure space after punctuation if followed by letters/digits (fixes yep.there)
+    query = re.sub(r'([.,!?])(?=[A-Za-z0-9])', r'\1 ', query)
+    # Clean up edge cases like words directly touching parenthetical boundaries
+    query = re.sub(r'(?<=\w)\)', r') ', query)
 
     # stripping end spaces and removing multiple spaces
     query = re.sub(r'\s+',' ',query)
