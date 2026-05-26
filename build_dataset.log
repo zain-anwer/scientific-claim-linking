@@ -92,3 +92,209 @@ Year distribution:
 Citation distribution:
 2026-05-25 02:15:42,932  INFO        10–99       3877  (29.8%)
 2026-05-25 02:15:42,932  INFO        1–9         2600  (20.0%)
+2026-05-25 23:24:36,167  INFO      ============================================================
+2026-05-25 23:24:36,168  INFO      Scientific Claim Linking Dataset Builder
+2026-05-25 23:24:36,168  INFO      Target: 20,000 papers | Output: papers_dataset.jsonl
+2026-05-25 23:24:36,169  INFO      ============================================================
+2026-05-25 23:24:36,169  INFO      
+Domain: BIOMEDICAL_HEALTH (target=9000)
+2026-05-25 23:24:36,170  INFO        Core medical claims — disease, treatment, drugs, symptoms
+2026-05-25 23:28:42,016  INFO      ============================================================
+2026-05-25 23:28:42,016  INFO      Scientific Claim Linking Dataset Builder
+2026-05-25 23:28:42,017  INFO      Target: 27,000 papers | Output: generated_metadata.jsonl
+2026-05-25 23:28:42,021  INFO      ============================================================
+2026-05-25 23:28:42,023  INFO      
+Domain: BIOMEDICAL_HEALTH (target=9000)
+2026-05-25 23:28:42,024  INFO        Core medical claims — disease, treatment, drugs, symptoms
+2026-05-25 23:30:52,838  INFO      ============================================================
+2026-05-25 23:30:52,839  INFO      Scientific Claim Linking Dataset Builder
+2026-05-25 23:30:52,840  INFO      Target: 27,000 papers | Output: generated_metadata.jsonl
+2026-05-25 23:30:52,840  INFO      ============================================================
+2026-05-25 23:30:52,841  INFO      
+Domain: BIOMEDICAL_HEALTH (target=9000)
+2026-05-25 23:30:52,841  INFO        Core medical claims — disease, treatment, drugs, symptoms
+2026-05-25 23:35:06,414  INFO        Domain total: 9000 papers (running total: 9000)
+2026-05-25 23:35:06,415  INFO      
+Domain: NUTRITION_FOOD_SCIENCE (target=5000)
+2026-05-25 23:35:06,416  INFO        Diet, supplements, fasting, seed oils, processed food, vitamins
+2026-05-25 23:38:13,229  INFO        Domain total: 5000 papers (running total: 14000)
+2026-05-25 23:38:13,230  INFO      
+Domain: EPIDEMIOLOGY_PUBLIC_HEALTH (target=4000)
+2026-05-25 23:38:13,230  INFO        Risk factors, population health, outbreaks, prevalence
+2026-05-25 23:38:20,108  INFO        Domain total: 0 papers (running total: 14000)
+2026-05-25 23:38:20,108  INFO      
+Domain: NEUROSCIENCE_PSYCHOLOGY (target=3000)
+2026-05-25 23:38:20,109  INFO        Mental health, cognition, ADHD, depression, behavioural claims
+2026-05-25 23:41:24,165  INFO      ============================================================
+2026-05-25 23:41:24,166  INFO      Scientific Claim Linking Dataset Builder
+2026-05-25 23:41:24,166  INFO      Target: 27,000 papers | Output: generated_metadata.jsonl
+2026-05-25 23:41:24,167  INFO      ============================================================
+2026-05-25 23:41:24,167  INFO      
+Domain: BIOMEDICAL_HEALTH (target=9000)
+2026-05-25 23:41:24,168  INFO        Core medical claims — disease, treatment, drugs, symptoms
+2026-05-25 23:45:05,609  INFO      ============================================================
+2026-05-25 23:45:05,609  INFO      Scientific Claim Linking Dataset Builder
+2026-05-25 23:45:05,610  INFO      Target: 27,000 papers | Output: generated_metadata.jsonl
+2026-05-25 23:45:05,612  INFO      ============================================================
+2026-05-25 23:45:05,613  INFO      
+Domain: BIOMEDICAL_HEALTH (target=9000)
+2026-05-25 23:45:05,613  INFO        Core medical claims — disease, treatment, drugs, symptoms
+2026-05-25 23:45:05,614  INFO        [biomedical_health/high_cited_recent] target=2250 | years=2018–2025 | min_cited >= 50
+2026-05-25 23:46:33,447  INFO          -> collected 2250 papers
+2026-05-25 23:46:33,461  INFO        [biomedical_health/high_cited_older] target=2250 | years=1990–2017 | min_cited >= 100
+2026-05-25 23:47:29,886  INFO          -> collected 2250 papers
+2026-05-25 23:47:29,901  INFO        [biomedical_health/mid_cited_recent] target=2700 | years=2018–2025 | min_cited >= 10
+2026-05-25 23:48:59,487  INFO          -> collected 2700 papers
+2026-05-25 23:48:59,499  INFO        [biomedical_health/low_cited_recent] target=1800 | years=2021–2025 | min_cited >= 1
+2026-05-25 23:49:46,805  INFO          -> collected 1800 papers
+2026-05-25 23:49:46,820  INFO        Domain total: 9000 papers (running total: 9000)
+2026-05-25 23:49:46,820  INFO      
+Domain: NUTRITION_FOOD_SCIENCE (target=5000)
+2026-05-25 23:49:46,821  INFO        Diet, supplements, fasting, seed oils, processed food, vitamins
+2026-05-25 23:49:46,822  INFO        [nutrition_food_science/high_cited_recent] target=1250 | years=2018–2025 | min_cited >= 50
+2026-05-25 23:50:42,470  INFO          -> collected 1250 papers
+2026-05-25 23:50:42,485  INFO        [nutrition_food_science/high_cited_older] target=1250 | years=1990–2017 | min_cited >= 100
+2026-05-25 23:51:26,384  INFO          -> collected 1250 papers
+2026-05-25 23:51:26,403  INFO        [nutrition_food_science/mid_cited_recent] target=1500 | years=2018–2025 | min_cited >= 10
+2026-05-25 23:52:25,391  INFO          -> collected 1500 papers
+2026-05-25 23:52:25,408  INFO        [nutrition_food_science/low_cited_recent] target=1000 | years=2021–2025 | min_cited >= 1
+2026-05-25 23:52:58,749  INFO          -> collected 1000 papers
+2026-05-25 23:52:58,766  INFO        Domain total: 5000 papers (running total: 14000)
+2026-05-25 23:52:58,766  INFO      
+Domain: EPIDEMIOLOGY_PUBLIC_HEALTH (target=4000)
+2026-05-25 23:52:58,767  INFO        Risk factors, population health, outbreaks, prevalence
+2026-05-25 23:52:58,767  INFO        [epidemiology_public_health/high_cited_recent] target=1000 | years=2018–2025 | min_cited >= 50
+2026-05-25 23:53:00,548  INFO          -> collected 0 papers
+2026-05-25 23:53:00,551  INFO        [epidemiology_public_health/high_cited_older] target=1000 | years=1990–2017 | min_cited >= 100
+2026-05-25 23:53:02,318  INFO          -> collected 0 papers
+2026-05-25 23:53:02,321  INFO        [epidemiology_public_health/mid_cited_recent] target=1200 | years=2018–2025 | min_cited >= 10
+2026-05-25 23:53:03,991  INFO          -> collected 0 papers
+2026-05-25 23:53:03,995  INFO        [epidemiology_public_health/low_cited_recent] target=800 | years=2021–2025 | min_cited >= 1
+2026-05-25 23:53:05,650  INFO          -> collected 0 papers
+2026-05-25 23:53:05,652  INFO        Domain total: 0 papers (running total: 14000)
+2026-05-25 23:53:05,653  INFO      
+Domain: NEUROSCIENCE_PSYCHOLOGY (target=3000)
+2026-05-25 23:53:05,653  INFO        Mental health, cognition, ADHD, depression, behavioural claims
+2026-05-25 23:53:05,654  INFO        [neuroscience_psychology/high_cited_recent] target=750 | years=2018–2025 | min_cited >= 50
+2026-05-25 23:53:34,072  INFO          -> collected 750 papers
+2026-05-25 23:53:34,081  INFO        [neuroscience_psychology/high_cited_older] target=750 | years=1990–2017 | min_cited >= 100
+2026-05-25 23:53:58,355  INFO          -> collected 750 papers
+2026-05-25 23:53:58,365  INFO        [neuroscience_psychology/mid_cited_recent] target=900 | years=2018–2025 | min_cited >= 10
+2026-05-25 23:54:30,346  INFO          -> collected 900 papers
+2026-05-25 23:54:30,355  INFO        [neuroscience_psychology/low_cited_recent] target=600 | years=2021–2025 | min_cited >= 1
+2026-05-25 23:54:53,425  INFO          -> collected 600 papers
+2026-05-25 23:54:53,443  INFO        Domain total: 3000 papers (running total: 17000)
+2026-05-25 23:54:53,443  INFO      
+Domain: IMMUNOLOGY_VACCINES (target=3000)
+2026-05-25 23:54:53,459  INFO        Vaccines, immunity, autoimmune claims, pathogens
+2026-05-25 23:54:53,462  INFO        [immunology_vaccines/high_cited_recent] target=750 | years=2018–2025 | min_cited >= 50
+2026-05-25 23:54:55,625  INFO          -> collected 0 papers
+2026-05-25 23:54:55,628  INFO        [immunology_vaccines/high_cited_older] target=750 | years=1990–2017 | min_cited >= 100
+2026-05-25 23:54:57,540  INFO          -> collected 0 papers
+2026-05-25 23:54:57,544  INFO        [immunology_vaccines/mid_cited_recent] target=900 | years=2018–2025 | min_cited >= 10
+2026-05-25 23:54:59,624  INFO          -> collected 0 papers
+2026-05-25 23:54:59,627  INFO        [immunology_vaccines/low_cited_recent] target=600 | years=2021–2025 | min_cited >= 1
+2026-05-25 23:55:01,148  INFO          -> collected 0 papers
+2026-05-25 23:55:01,151  INFO        Domain total: 0 papers (running total: 17000)
+2026-05-25 23:55:01,170  INFO      
+Domain: ENVIRONMENTAL_CLIMATE (target=1000)
+2026-05-25 23:55:01,171  INFO        Pollution, radiation, climate-health, air quality
+2026-05-25 23:55:01,171  INFO        [environmental_climate/high_cited_recent] target=250 | years=2018–2025 | min_cited >= 50
+2026-05-25 23:55:02,763  INFO          -> collected 0 papers
+2026-05-25 23:55:02,768  INFO        [environmental_climate/high_cited_older] target=250 | years=1990–2017 | min_cited >= 100
+2026-05-25 23:55:04,533  INFO          -> collected 0 papers
+2026-05-25 23:55:04,537  INFO        [environmental_climate/mid_cited_recent] target=300 | years=2018–2025 | min_cited >= 10
+2026-05-25 23:55:06,513  INFO          -> collected 0 papers
+2026-05-25 23:55:06,516  INFO        [environmental_climate/low_cited_recent] target=200 | years=2021–2025 | min_cited >= 1
+2026-05-25 23:55:08,318  INFO          -> collected 0 papers
+2026-05-25 23:55:08,321  INFO        Domain total: 0 papers (running total: 17000)
+2026-05-25 23:55:08,322  INFO      
+Domain: BIOLOGY_GENETICS (target=1500)
+2026-05-25 23:55:08,322  INFO        CRISPR, microbiome, GMO, genetics
+2026-05-25 23:55:08,322  INFO        [biology_genetics/high_cited_recent] target=375 | years=2018–2025 | min_cited >= 50
+2026-05-25 23:55:29,354  INFO          -> collected 375 papers
+2026-05-25 23:55:29,366  INFO        [biology_genetics/high_cited_older] target=375 | years=1990–2017 | min_cited >= 100
+2026-05-25 23:55:43,173  INFO          -> collected 375 papers
+2026-05-25 23:55:43,187  INFO        [biology_genetics/mid_cited_recent] target=450 | years=2018–2025 | min_cited >= 10
+2026-05-25 23:56:07,931  INFO          -> collected 450 papers
+2026-05-25 23:56:07,948  INFO        [biology_genetics/low_cited_recent] target=300 | years=2021–2025 | min_cited >= 1
+2026-05-25 23:56:23,927  INFO          -> collected 300 papers
+2026-05-25 23:56:23,944  INFO        Domain total: 1500 papers (running total: 18500)
+2026-05-25 23:56:23,945  INFO      
+Domain: CHEMISTRY_TOXICOLOGY (target=1000)
+2026-05-25 23:56:23,945  INFO        Heavy metals, fluoride, toxins, endocrine disruptors, EMF
+2026-05-25 23:56:23,946  INFO        [chemistry_toxicology/high_cited_recent] target=250 | years=2018–2025 | min_cited >= 50
+2026-05-25 23:56:39,495  INFO          -> collected 250 papers
+2026-05-25 23:56:39,535  INFO        [chemistry_toxicology/high_cited_older] target=250 | years=1990–2017 | min_cited >= 100
+2026-05-25 23:57:00,483  INFO          -> collected 250 papers
+2026-05-25 23:57:00,501  INFO        [chemistry_toxicology/mid_cited_recent] target=300 | years=2018–2025 | min_cited >= 10
+2026-05-25 23:57:16,314  INFO          -> collected 300 papers
+2026-05-25 23:57:16,389  INFO        [chemistry_toxicology/low_cited_recent] target=200 | years=2021–2025 | min_cited >= 1
+2026-05-25 23:57:26,655  INFO          -> collected 200 papers
+2026-05-25 23:57:26,671  INFO        Domain total: 1000 papers (running total: 19500)
+2026-05-25 23:57:28,729  INFO      
+============================================================
+2026-05-25 23:57:28,730  INFO      DONE. Total papers written: 19,500
+2026-05-25 23:57:28,731  INFO      Output: generated_metadata.jsonl
+2026-05-25 23:57:28,736  INFO      ============================================================
+2026-05-25 23:57:28,737  INFO      
+Domain breakdown:
+2026-05-25 23:57:28,738  INFO        biomedical_health                    9000
+2026-05-25 23:57:28,738  INFO            high_cited_recent               2250
+2026-05-25 23:57:28,738  INFO            high_cited_older                2250
+2026-05-25 23:57:28,739  INFO            mid_cited_recent                2700
+2026-05-25 23:57:28,739  INFO            low_cited_recent                1800
+2026-05-25 23:57:28,740  INFO        nutrition_food_science               5000
+2026-05-25 23:57:28,740  INFO            high_cited_recent               1250
+2026-05-25 23:57:28,740  INFO            high_cited_older                1250
+2026-05-25 23:57:28,741  INFO            mid_cited_recent                1500
+2026-05-25 23:57:28,741  INFO            low_cited_recent                1000
+2026-05-25 23:57:28,741  INFO        epidemiology_public_health              0
+2026-05-25 23:57:28,742  INFO            high_cited_recent                  0
+2026-05-25 23:57:28,742  INFO            high_cited_older                   0
+2026-05-25 23:57:28,743  INFO            mid_cited_recent                   0
+2026-05-25 23:57:28,743  INFO            low_cited_recent                   0
+2026-05-25 23:57:28,744  INFO        neuroscience_psychology              3000
+2026-05-25 23:57:28,744  INFO            high_cited_recent                750
+2026-05-25 23:57:28,745  INFO            high_cited_older                 750
+2026-05-25 23:57:28,745  INFO            mid_cited_recent                 900
+2026-05-25 23:57:28,745  INFO            low_cited_recent                 600
+2026-05-25 23:57:28,746  INFO        immunology_vaccines                     0
+2026-05-25 23:57:28,746  INFO            high_cited_recent                  0
+2026-05-25 23:57:28,747  INFO            high_cited_older                   0
+2026-05-25 23:57:28,747  INFO            mid_cited_recent                   0
+2026-05-25 23:57:28,747  INFO            low_cited_recent                   0
+2026-05-25 23:57:28,748  INFO        environmental_climate                   0
+2026-05-25 23:57:28,749  INFO            high_cited_recent                  0
+2026-05-25 23:57:28,749  INFO            high_cited_older                   0
+2026-05-25 23:57:28,750  INFO            mid_cited_recent                   0
+2026-05-25 23:57:28,750  INFO            low_cited_recent                   0
+2026-05-25 23:57:28,751  INFO        biology_genetics                     1500
+2026-05-25 23:57:28,751  INFO            high_cited_recent                375
+2026-05-25 23:57:28,752  INFO            high_cited_older                 375
+2026-05-25 23:57:28,753  INFO            mid_cited_recent                 450
+2026-05-25 23:57:28,753  INFO            low_cited_recent                 300
+2026-05-25 23:57:28,754  INFO        chemistry_toxicology                 1000
+2026-05-25 23:57:28,754  INFO            high_cited_recent                250
+2026-05-25 23:57:28,755  INFO            high_cited_older                 250
+2026-05-25 23:57:28,755  INFO            mid_cited_recent                 300
+2026-05-25 23:57:28,756  INFO            low_cited_recent                 200
+2026-05-25 23:57:28,780  INFO      
+Year distribution:
+2026-05-25 23:57:28,794  INFO        2021-2025   10839  (55.6%)
+2026-05-25 23:57:28,795  INFO        2018-2020    3786  (19.4%)
+2026-05-25 23:57:28,805  INFO        2010-2017    1433  (7.3%)
+2026-05-25 23:57:28,807  INFO        2000-2009    2134  (10.9%)
+2026-05-25 23:57:28,808  INFO        1990-1999    1308  (6.7%)
+2026-05-25 23:57:28,824  INFO      
+Citation distribution:
+2026-05-25 23:57:28,840  INFO        10-99       5808  (29.8%)
+2026-05-25 23:57:28,841  INFO        1-9         3900  (20.0%)
+2026-05-26 00:40:03,436  INFO      ============================================================
+2026-05-26 00:40:03,442  INFO      Scientific Claim Linking Dataset Builder
+2026-05-26 00:40:03,442  INFO      Target: 27,000 papers | Output: generated_metadata.jsonl
+2026-05-26 00:40:03,443  INFO      ============================================================
+2026-05-26 00:40:03,452  INFO      
+Domain: BIOMEDICAL_HEALTH (target=9000)
+2026-05-26 00:40:03,454  INFO        Core medical claims — disease, treatment, drugs, symptoms
+2026-05-26 00:40:03,454  INFO        [biomedical_health/high_cited_recent] target=2250 | years=2018–2025 | min_cited >= 50

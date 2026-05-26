@@ -4,7 +4,6 @@ import spacy
 from pathlib import Path
 from scispacy.linking import EntityLinker
 
-
 PIPELINE_PATH = Path(__file__).resolve().parent.parent / 'pipelines/scispacy_linker_pipeline'
 
 """
@@ -26,7 +25,6 @@ nlp.add_pipe(
         "max_entities_per_mention": 1
     }
 )
-
 
 linker = nlp.get_pipe("scispacy_linker")
 

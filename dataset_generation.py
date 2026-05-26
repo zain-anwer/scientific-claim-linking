@@ -9,10 +9,10 @@ Output fields: id, title, authors, abstract, date, doi, url
 
 Design principles:
   - Domain balance across 8 scientific areas
-  - Citation × recency stratification within each domain
+  - Citation x recency stratification within each domain
   - Hard quality gates (abstract length, DOI, peer-review signal)
   - Minimum citation = 1 (quality signal, not popularity filter)
-  - Year range 1990–2025 to cover both foundational and recent evidence
+  - Year range 1990-2025 to cover both foundational and recent evidence
   - Cursor-based pagination (fast, no offset degradation)
   - Deduplication by DOI across all domains
   - JSONL output for streaming into vector stores
@@ -21,11 +21,16 @@ Design principles:
 import requests
 import json
 import time
+import sys
 import logging
 import argparse
 from pathlib import Path
 from datetime import datetime
 from collections import defaultdict
+
+# trying to fix the ugly log issue
+
+sys.stdout.reconfigure(encoding='utf-8')
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -47,46 +52,72 @@ TOTAL_TARGET = 20_000
 #   - Epidemiology → core claim-linking domain
 #   - Microbiology/immunology → vaccine + pathogen claims
 
+# Weighing domains based on how often they pop up in social media claims
+
 DOMAINS = {
+
     "biomedical_health": {
-        "concept_id": "C71924100",          # Medicine
-        "target": 3500,
-        "description": "Core medical/health claims — drugs, disease, treatment",
+        "concept_id": "C71924100",
+        "target": 9000,
+        "description": (
+            "Core medical claims — disease, treatment, drugs, symptoms"
+        ),
     },
+
     "nutrition_food_science": {
-        "concept_id": "C203014093",         # Nutrition
-        "target": 2000,
-        "description": "Diet, supplements, food safety claims",
+        "concept_id": "C203014093",
+        "target": 5000,
+        "description": (
+            "Diet, supplements, fasting, seed oils, processed food, vitamins"
+        ),
     },
+
     "epidemiology_public_health": {
-        "concept_id": "C2779747511",        # Epidemiology
-        "target": 2500,
-        "description": "Disease prevalence, risk factors, population health",
+        "concept_id": "C2779747511",
+        "target": 4000,
+        "description": (
+            "Risk factors, population health, outbreaks, prevalence"
+        ),
     },
+
     "neuroscience_psychology": {
-        "concept_id": "C15744967",          # Psychology
-        "target": 2000,
-        "description": "Mental health, cognitive, behavioural claims",
-    },
-    "immunology_vaccines": {
-        "concept_id": "C2986040975",        # Immunology
-        "target": 2500,
-        "description": "Vaccine efficacy, immune response, pathogen claims",
-    },
-    "environmental_climate": {
-        "concept_id": "C2776140422",        # Climate change / environmental science
-        "target": 2000,
-        "description": "Climate, pollution, radiation, chemical exposure claims",
-    },
-    "biology_genetics": {
-        "concept_id": "C86803240",          # Biology / genetics
-        "target": 2500,
-        "description": "GMO, CRISPR, evolution, microbiome claims",
-    },
-    "chemistry_toxicology": {
-        "concept_id": "C185592680",         # Chemistry
+        "concept_id": "C15744967",
         "target": 3000,
-        "description": "Chemical exposure, toxins, heavy metals — covers physics-adjacent claims like EMF, fluoride",
+        "description": (
+            "Mental health, cognition, ADHD, depression, behavioural claims"
+        ),
+    },
+
+    "immunology_vaccines": {
+        "concept_id": "C2986040975",
+        "target": 3000,
+        "description": (
+            "Vaccines, immunity, autoimmune claims, pathogens"
+        ),
+    },
+
+    "environmental_climate": {
+        "concept_id": "C2776140422",
+        "target": 1000,
+        "description": (
+            "Pollution, radiation, climate-health, air quality"
+        ),
+    },
+
+    "biology_genetics": {
+        "concept_id": "C86803240",
+        "target": 1500,
+        "description": (
+            "CRISPR, microbiome, GMO, genetics"
+        ),
+    },
+
+    "chemistry_toxicology": {
+        "concept_id": "C185592680",
+        "target": 1000,
+        "description": (
+            "Heavy metals, fluoride, toxins, endocrine disruptors, EMF"
+        ),
     },
 }
 
@@ -303,7 +334,7 @@ def fetch_stratum(concept_id: str, domain_name: str, stratum: dict, target: int,
     log.info(
         f"  [{domain_name}/{stratum['name']}] "
         f"target={target} | years={stratum['year_from']}–{stratum['year_to']} | "
-        f"min_cited≥{stratum['min_cited_by']}"
+        f"min_cited >= {stratum['min_cited_by']}"
     )
 
     while len(papers) < target:
@@ -371,7 +402,7 @@ def fetch_stratum(concept_id: str, domain_name: str, stratum: dict, target: int,
         cursor = next_cursor
         time.sleep(REQUEST_DELAY)
 
-    log.info(f"    → collected {len(papers)} papers")
+    log.info(f"    -> collected {len(papers)} papers")
     return papers
 
 
@@ -444,25 +475,25 @@ def build_dataset(output_file: Path = OUTPUT_FILE, total_target: int = TOTAL_TAR
     year_buckets = defaultdict(int)
     for p in all_papers:
         y = p.get("year") or 0
-        if y >= 2021:   bucket = "2021–2025"
-        elif y >= 2018: bucket = "2018–2020"
-        elif y >= 2010: bucket = "2010–2017"
-        elif y >= 2000: bucket = "2000–2009"
-        else:           bucket = "1990–1999"
+        if y >= 2021:   bucket = "2021-2025"
+        elif y >= 2018: bucket = "2018-2020"
+        elif y >= 2010: bucket = "2010-2017"
+        elif y >= 2000: bucket = "2000-2009"
+        else:           bucket = "1990-1999"
         year_buckets[bucket] += 1
 
     log.info("\nYear distribution:")
-    for bucket in ["2021–2025", "2018–2020", "2010–2017", "2000–2009", "1990–1999"]:
+    for bucket in ["2021-2025", "2018-2020", "2010-2017", "2000-2009", "1990-1999"]:
         pct = year_buckets[bucket] / max(len(all_papers), 1) * 100
         log.info(f"  {bucket}   {year_buckets[bucket]:>5}  ({pct:.1f}%)")
 
     # Citation distribution
-    cite_buckets = {"≥100": 0, "10–99": 0, "1–9": 0}
+    cite_buckets = {"≥100": 0, "10-99": 0, "1-9": 0}
     for p in all_papers:
         c = p.get("cited_by", 0)
         if c >= 100:  cite_buckets["≥100"] += 1
-        elif c >= 10: cite_buckets["10–99"] += 1
-        else:         cite_buckets["1–9"] += 1
+        elif c >= 10: cite_buckets["10-99"] += 1
+        else:         cite_buckets["1-9"] += 1
 
     log.info("\nCitation distribution:")
     for label, count in cite_buckets.items():

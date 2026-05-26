@@ -1,5 +1,37 @@
 # some onnx optimization would help apparently
 
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import torch
+
+MODEL = 'humarin/chatgpt_paraphraser_on_T5_base'
+tokenizer = AutoTokenizer.from_pretrained(MODEL)
+model = AutoModelForSeq2SeqLM.from_pretrained(MODEL)
+
+prompt = "paraphrase: COVID vaccines work syringe microbe fire yay!"
+
+
+inputs = tokenizer(
+    prompt,
+    return_tensors = "pt",
+    truncation = True,
+    max_length = 128
+)
+
+with torch.no_grad():
+    output = model.generate(
+        **inputs,              # resolves the dictionary,
+        num_beams = 4,
+        max_new_tokens = 32,
+        early_stopping = True
+    )
+
+rewritten = tokenizer.decode(
+    output[0],
+    skip_special_tokens = True
+)
+
+print(rewritten)
+
 """
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import torch

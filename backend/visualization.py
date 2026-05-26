@@ -237,6 +237,6 @@ fig.update_layout(
 fig.show()
  
 # Optional: save to HTML for portfolio / submission
-out_html = BASE_DIR / "cluster_viz.html"
+out_html = BASE_DIR / "cluster_visualization.html"
 fig.write_html(str(out_html))
 print(f"\nSaved interactive HTML → {out_html}")
