@@ -19,7 +19,7 @@ from utils.semantic_search import get_top_semantic_results
 # generating dynamic paths through pathlib
 BASE_DIR = Path(__file__).resolve().parent
 TEST_DIR = BASE_DIR.parent
-CSV_PATH = BASE_DIR.parent / 'evaluation_metadata.csv'
+CSV_PATH = BASE_DIR.parent / 'cord19_metadata.csv'
 
 # constructing query set
 df = pd.read_csv(TEST_DIR / 'gold_standard.tsv',sep='\t')

@@ -1,3 +1,17 @@
+# -------------------------- FIXING IMPORT ISSUES --------------------------------------- #
+
+import sys
+from pathlib import Path
+
+# getting the parent directory of 'indexer' (the root folder containing both modules)
+# this probably fixes the path from where the code is executed 
+BASE_DIR = Path(__file__).resolve().parent
+ROOT_DIR = BASE_DIR.parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+# ---------------------------------------------------------------------------------------- #
+
 from tqdm import tqdm
 import numpy as np
 import pandas as pd

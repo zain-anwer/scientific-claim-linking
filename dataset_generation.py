@@ -66,7 +66,7 @@ DOMAINS = {
 
     "nutrition_food_science": {
         "concept_id": "C203014093",
-        "target": 5000,
+        "target": 6000,
         "description": (
             "Diet, supplements, fasting, seed oils, processed food, vitamins"
         ),
@@ -74,7 +74,7 @@ DOMAINS = {
 
     "epidemiology_public_health": {
         "concept_id": "C2779747511",
-        "target": 4000,
+        "target": 5000,
         "description": (
             "Risk factors, population health, outbreaks, prevalence"
         ),
