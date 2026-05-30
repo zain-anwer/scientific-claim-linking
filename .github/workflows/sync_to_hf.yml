@@ -22,12 +22,16 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git config --global init.defaultBranch main
+          # 1. Enter the directory and isolate the git environment
           cd backend
-          git init
+          git init -b main
+          
+          # 2. Set the configuration locally right here
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          
+          # 3. Link remote and force push
           git remote add hf https://ze19n:$HF_TOKEN@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
           git add .
           git commit -m "sync from github"
-          git push hf HEAD:main --force
+          git push hf main --force
