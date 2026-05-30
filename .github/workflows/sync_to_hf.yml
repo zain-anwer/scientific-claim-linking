@@ -18,11 +18,35 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      # This marketplace action handles all the complicated LFS handshake logic cleanly
       - name: Push backend subfolder to HuggingFace Space
-        uses: CustomInk/huggingface-spaces-upload-action@v2
-        with:
-          hf_token: ${{ secrets.HF_TOKEN }}
-          hf_username: "ze19n"
-          space_name: "scientific-claim-linking-backend"
-          space_directory: "./backend"
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          cd backend
+          
+          # 1. Initialize a clean repository
+          git init -b main
+          
+          # 2. Set up local user identity
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          
+          # 3. Configure a global Git credential helper to inject the token automatically
+          git config --global credential.helper store
+          echo "https://ze19n:${HF_TOKEN}@huggingface.co" > ~/.git-credentials
+          
+          # 4. Turn on and configure Git LFS tracking
+          git lfs install
+          git lfs track "*.index"
+          git lfs track "*.npy"
+          git lfs track "*.pkl"
+          git lfs track "*.zip"
+          git add .gitattributes
+          
+          # 5. Link the remote using the token-authenticated URL format
+          git remote add hf https://ze19n:${HF_TOKEN}@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
+          
+          # 6. Stage, commit, and push everything safely
+          git add .
+          git commit -m "sync from github with native lfs credentials"
+          git push hf main --force
