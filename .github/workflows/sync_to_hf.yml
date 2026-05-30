@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout GitHub repo
-        uses: actions/checkout@v4        # updated from v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
@@ -24,8 +24,9 @@ jobs:
         run: |
           cd backend
           git init
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git checkout -b main
           git remote add hf https://ze19n:$HF_TOKEN@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
           git add .
           git commit -m "sync from github"
