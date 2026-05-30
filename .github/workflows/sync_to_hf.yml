@@ -19,14 +19,21 @@ jobs:
           lfs: true
 
       - name: Push backend subfolder to HuggingFace Space
-        env:
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          # 1. Navigate into the backend directory
           cd backend
+          
+          # 2. Initialize a clean repository explicitly named 'main'
           git init -b main
+          
+          # 3. Configure Git credentials locally inside this directory
           git config user.email "action@github.com"
           git config user.name "GitHub Action"
-          git remote add hf https://ze19n:$HF_TOKEN@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
+          
+          # 4. Link the Hugging Face remote securely using native GitHub secrets token injection
+          git remote add hf https://ze19n:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
+          
+          # 5. Stage, commit, and force-push to the Space
           git add .
           git commit -m "sync from github"
           git push hf main --force
