@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'backend/**'    # only triggers when backend files change
+      - 'backend/**'
 
 jobs:
   sync:
@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout GitHub repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4        # updated from v3
         with:
           fetch-depth: 0
           lfs: true
@@ -24,6 +24,8 @@ jobs:
         run: |
           cd backend
           git init
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
           git remote add hf https://ze19n:$HF_TOKEN@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
           git add .
           git commit -m "sync from github"
