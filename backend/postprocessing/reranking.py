@@ -1,11 +1,16 @@
 from sentence_transformers import CrossEncoder
+from pathlib import Path
 
-ce_model = CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')
+MODEL_PATH = Path(__file__).resolve().parent.parent / 'models/scibert_reranker'
+
+ce_model = CrossEncoder(MODEL_PATH)
 
 def cross_encoder_reranking(idx_list,texts,query):
 
+    idx_list = idx_list[:25]
     pairs = [(query,texts[i]) for i in idx_list]
     scores = ce_model.predict(pairs)
 
     reranked_idx = [idx for score,idx in sorted(zip(scores,idx_list),reverse=True)]
-    return reranked_idx
+    scores = [score for score,idx in sorted(zip(scores,idx_list),reverse=True)]
+    return reranked_idx,scores

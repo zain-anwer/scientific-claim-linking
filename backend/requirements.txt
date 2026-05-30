@@ -38,6 +38,7 @@ accelerate
 # =========================
 # SCIENTIFIC NLP
 # =========================
+nltk
 spacy
 scispacy
 

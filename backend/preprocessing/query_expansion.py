@@ -10,6 +10,7 @@ CHOICE = input("Enter linker type (umls or mesh) : ")
 import spacy 
 from pathlib import Path
 from scispacy.linking import EntityLinker
+from preprocessing.query_normalization import normalize_query
 
 PIPELINE_PATH = Path(__file__).resolve().parent.parent / 'pipelines/scispacy_linker_pipeline'
 
@@ -37,6 +38,15 @@ linker = nlp.get_pipe("scispacy_linker")
 
 def query_expansion(query : str) -> str:
     
+    # pre expansion normalization that doesn't change semantic meaning
+    # query = remove_elongation(query)
+    # query = remove_emojis(query)
+    # query = clean_unicode_and_layout(query)
+ 
+    query = " ".join(normalize_query(query))
+ 
+    print('Modified query prior expansion: ',query)
+
     doc = nlp(query)
     
     expanded_terms = set()

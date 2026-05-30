@@ -1,81 +1,138 @@
-import numpy as np
-import pickle
-import faiss
-import pandas as pd
-from pathlib import Path
-from indexer.faiss_indexer import generate_embeddings
-from preprocessing.query_expansion import query_expansion
-from preprocessing.query_normalization import normalize_query
+# specter2 model weights and stuff --> increase startup time
+# scispacy linker library --> increase startup time
+# scibert_finetuned --> saved
+# bio
 
+
+# backend FASTAPI code
+
+# -------------------------- FASTAPI RELATED IMPORTS ------------------------------ #
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import numpy as np
+import pandas as pd
+import httpx
+from pathlib import Path
+import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+
+# -------------------------- INTERNAL LOGIC RELATED IMPORTS ----------------------- #
+
+from preprocessing.query_expansion import query_expansion
+from postprocessing.reciprocal_rank_fusion import reciprocal_rank_fusion
+from postprocessing.reranking import cross_encoder_reranking
+from postprocessing.fact_checking import claim_verification
+from utils.bm25_search import get_top_bm25_results
+from utils.semantic_search import get_top_semantic_results
+
+# loading data from the csv
 
 BASE_DIR = Path(__file__).resolve().parent
-INDEX_PATH = BASE_DIR / 'indexes'
+CSV_PATH = BASE_DIR / "data/cleaned_metadata.zip"
 
-df = pd.read_csv(BASE_DIR.parent / 'cleaned_metadata.csv')
-df['doc'] = df['doi'].fillna(' ') + ' ' + df['title'].fillna(' ')
-corpus = df['doc'].tolist()
+df = pd.read_csv(CSV_PATH)
+corpus      = df["id"].tolist()
+texts       = df["embedding_string"].tolist()
+titles      = df["title"].tolist()
+abstracts   = df["abstract"].tolist()
+urls        = df["url"].tolist()
 
-# query set
+RERANK_TOP_N = 30   # cross encoder sees top 50 from RRF
+RETURN_N     = 20   # endpoint returns top 20 after reranking
 
-query_set = [
-    'chicken pox is much severe for adults',
-    'dengue leads to insomnia and nausea',
-    'covid vaccines lead to malaria',
-    'covid is nothing but asthma',
-]
+app = FastAPI(
+    title="Scientific Claim Retrieval API",
+    description="BM25 + semantic search + SciBERT reranking over scientific literature.",
+    version="1.0.0",
+)
 
-faiss_idx = faiss.read_index(str(INDEX_PATH / 'faiss.index'))
-with open(INDEX_PATH / 'bm25.index.pkl','rb') as f:
-    bm25_idx = pickle.load(f)
+# cross origin request setup 
+
+app.add_middleware(
+    CORSMiddleware,
+    # allowing any domain to call API for now
+    allow_origins=["*"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
+)
+
+# payload schemas 
+
+class QueryRequest(BaseModel):
+    post: str
+
+class PaperResult(BaseModel):
+    rank:     int
+    title:    str
+    abstract: str
+    url:      str
+    stance:   str       # "supports" | "neutral" | "refutes"
+    score:    float
+
+class QueryResponse(BaseModel):
+    query:   str
+    results: list[PaperResult]
+
+# API endpoints
+
+@app.get("/")
+async def health():
+
+    hf_url = "https://huggingface.co"
+    try:
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            resp = await client.get(hf_url)
+        hf_ok = resp.status_code == 200
+    except Exception:
+        hf_ok = False
+
+    if not hf_ok:
+        raise HTTPException(
+            status_code=503,
+            detail="HuggingFace Hub unreachable — model registry may be unavailable.",
+        )
+
+    return {"status": "ok", "huggingface": "reachable"}
 
 
-def get_top_semantic_results(query : str, n : int):
-
-    query_vector = generate_embeddings([query])
-
-    # faiss search already returns indices of embeddings sorted by distance   
-    distances, idx_list = faiss_idx.search(query_vector,n)
-
-    return idx_list[0]
-
-
-def get_top_bm25_results(query : str, n : int):
+@app.post("/query", response_model=QueryResponse)
+def query_results(body: QueryRequest):
     
-    # query normalization
-    query_tokens = normalize_query(query)
-
-    # 1-D numpy array populated with similarity scores of each of the documents
-    scores = bm25_idx.get_scores(query_tokens)
+    post = body.post.strip()
     
-    # argsort returns the indices of the sorted numbers (prior sort) [::-1] reverses the list
-    idx_list = np.argsort(scores)[::-1][:n]
+    if not post:
+        raise HTTPException(status_code=422, detail="Post text must not be empty.")
 
-    return idx_list
+    # retrieval through both indexes
+    expanded = query_expansion(post)
+    list1 = get_top_bm25_results(expanded, 100)
+    list2 = get_top_semantic_results(post, 100)
 
-# smoothing factor of 60 to prevent division by zero 
-def reciprocal_rank_fusion(idx_list1 : np.ndarray,idx_list2 : np.ndarray,k : int = 60):
+    # combining results through RFF
+    idx_list = reciprocal_rank_fusion(list1, list2)
 
-    idx_score = {}
-    for idx_l in [idx_list1,idx_list2]:
-        for i,idx in enumerate(idx_l):
-            if idx not in idx_score:
-                idx_score[idx] = 1 / (i + k)
-            else:
-                idx_score[idx] += 1 / (i + k)
-    
-    result_idx = sorted(idx_score,key=idx_score.get,reverse=True)
-    return result_idx
+    # reranking through cross encoder
+    reranked_idx, reranked_scores = cross_encoder_reranking(
+        idx_list[:RERANK_TOP_N], texts, post
+    )
 
-for query in query_set:
-   
-    expanded_query = query_expansion(query)
-    
-    # using expanded query in bm25 only
-    list1 = get_top_bm25_results(expanded_query,3)
-    list2 = get_top_semantic_results(query,3)
-    
-    # combing results through RFF
-    idx_list = reciprocal_rank_fusion(list1,list2)
-    result = [corpus[i] for i in idx_list]
-    print('Result afer Reciprocal Rank Fusion (RRF): ')
-    print(result)
+    truth_values = []
+    for idx in reranked_idx:
+        truth_values.append(claim_verification(post,titles[idx],abstracts[idx])[0])
+
+    results = []
+    for rank, (idx, score) in enumerate(zip(reranked_idx[:RETURN_N], reranked_scores[:RETURN_N]), start=1):
+        results.append(PaperResult(
+            rank     = rank,
+            title    = titles[idx],
+            abstract = abstracts[idx],
+            url      = urls[idx],
+            stance   = truth_values[rank - 1],
+            score    = round(float(score), 4),
+        ))
+
+    return QueryResponse(query=post, results=results)
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
