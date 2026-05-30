@@ -1,9 +1,11 @@
-name: Sync to HuggingFace Space
+name: Sync Backend to HuggingFace Space
 
 on:
   push:
     branches:
-      - main        # triggers on every push to main
+      - main
+    paths:
+      - 'backend/**'    # only triggers when backend files change
 
 jobs:
   sync:
@@ -13,12 +15,16 @@ jobs:
       - name: Checkout GitHub repo
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0    # full history needed for clean push
-          lfs: true         # include LFS files (model weights)
+          fetch-depth: 0
+          lfs: true
 
-      - name: Push to HuggingFace Space
+      - name: Push backend subfolder to HuggingFace Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          cd backend
+          git init
           git remote add hf https://ze19n:$HF_TOKEN@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
-          git push hf main --force
+          git add .
+          git commit -m "sync from github"
+          git push hf HEAD:main --force
