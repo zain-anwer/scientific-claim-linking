@@ -1,6 +1,6 @@
 # ------------------ INITIAL CONFIG ----------------------- #
 
-CHOICE = input("Enter linker type (umls or mesh) : ")
+# CHOICE = input("Enter linker type (umls or mesh) : ")
 
 # --------------------------------------------------------- # 
 
@@ -27,7 +27,7 @@ nlp = spacy.load("en_core_sci_sm")
 nlp.add_pipe(
     "scispacy_linker",
     config = {
-        "linker_name": CHOICE,
+        "linker_name": 'mesh',
         "resolve_abbreviations" : True,
         "threshold": 0.85,
         "max_entities_per_mention": 1
