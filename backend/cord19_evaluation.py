@@ -18,8 +18,10 @@ from utils.semantic_search import get_top_semantic_results
 
 # generating dynamic paths through pathlib
 BASE_DIR = Path(__file__).resolve().parent
-TEST_PATH = str(BASE_DIR / 'data/cord19_test_zip')
+TEST_PATH = str(BASE_DIR / 'data/cord19_test.zip')
 CSV_PATH = str(BASE_DIR / 'data/cord19_metadata.zip')
+BM25_INDEX = str(BASE_DIR / 'cord19_indexes/bm25.index.pkl')
+FAISS_INDEX = str(BASE_DIR / 'cord19_indexes/faiss.index')
 
 # constructing query set
 df = pd.read_csv(TEST_PATH)
@@ -41,14 +43,14 @@ for i,query in enumerate(query_set):
     expanded_query = query_expansion(query)
     
     # using expanded query in bm25 only
-    list1 = get_top_bm25_results(expanded_query,100)
-    list2 = get_top_semantic_results(query,100)
+    list1 = get_top_bm25_results(expanded_query,100,BM25_INDEX)
+    list2 = get_top_semantic_results(query,100,FAISS_INDEX)
     
     # combing results through RFF
     idx_list = reciprocal_rank_fusion(list1,list2)
 
     if CHOICE == 'yes':
-        reranked_idx = cross_encoder_reranking(idx_list,texts,query)
+        reranked_idx = cross_encoder_reranking(idx_list,texts,query)[0]
     else:
         reranked_idx = idx_list
 
