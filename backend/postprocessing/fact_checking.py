@@ -1,7 +1,7 @@
 from transformers import pipeline
 from pathlib import Path
 
-MODEL = Path(__file__).resolve().parent.parent / 'models/biomedbert_nli'
+MODEL = 'ze19n/biomedbert-nli'
 
 # WindowsPath --> string
 MODEL = str(MODEL)

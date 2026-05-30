@@ -1,7 +1,7 @@
 from sentence_transformers import CrossEncoder
 from pathlib import Path
 
-MODEL_PATH = str(Path(__file__).resolve().parent.parent / 'models/scibert_reranker')
+MODEL_PATH = 'ze19n/scibert-cross-encoder-reranker'
 
 ce_model = CrossEncoder(MODEL_PATH)
 
