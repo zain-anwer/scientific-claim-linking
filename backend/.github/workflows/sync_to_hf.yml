@@ -1,0 +1,24 @@
+name: Sync to HuggingFace Space
+
+on:
+  push:
+    branches:
+      - main        # triggers on every push to main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0    # full history needed for clean push
+          lfs: true         # include LFS files (model weights)
+
+      - name: Push to HuggingFace Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git remote add hf https://ze19n:$HF_TOKEN@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
+          git push hf main --force
