@@ -55,19 +55,19 @@ for i,query in enumerate(query_set):
     idx_list = reciprocal_rank_fusion(list1,list2)
 
     if CHOICE == 'yes':
-        reranked_idx = cross_encoder_reranking(idx_list,texts,query)
+        reranked_idx = cross_encoder_reranking(idx_list,texts,query)[0]
     else:
         reranked_idx = idx_list
 
     # checking NLI pipeline for the papers
-    truth_value = []
-    for idx in reranked_idx:
-        truth_value.append(claim_verification(query,df['title'].iloc[idx],df['abstract'].iloc[idx])[0])
+    # truth_value = []
+    # for idx in reranked_idx:
+    #    truth_value.append(claim_verification(query,df['title'].iloc[idx],df['abstract'].iloc[idx])[0])
 
     # computing rr
     rr = reciprocal_rank(reranked_idx[:5],rel_ids[i],corpus)
     print(f'Reciprocal rank for {i+1}th query: {rr}')
-    print(f'Truth value of according to posts: ',truth_value)
+    # print(f'Truth value of according to posts: ',truth_value)
     
     mrr_list.append(rr)
 

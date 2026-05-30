@@ -7,16 +7,13 @@ venv/
 # python folders for faster interpretation I guess
 __pycache__/
 
-# installed models & pipelines to improve latency
-models/
-pipelines/
-
-# generated indexes (for now)
-indexes/
-
 # notes and development increments
 learning_notes.txt      
 todo_list.txt           
+
+# indexes
+indexes/
+models/
 
 # frontend crap
 
