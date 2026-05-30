@@ -12,9 +12,6 @@ learning_notes.txt
 todo_list.txt           
 
 models/
-indexes/embeddings.npy
-indexes/faiss.index
-indexes/uids.pkl
 
 # frontend crap
 
