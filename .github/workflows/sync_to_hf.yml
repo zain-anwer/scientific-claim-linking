@@ -22,11 +22,11 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          cd backend
-          git init
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git checkout -b main
+          git config --global init.defaultBranch main
+          cd backend
+          git init
           git remote add hf https://ze19n:$HF_TOKEN@huggingface.co/spaces/ze19n/scientific-claim-linking-backend
           git add .
           git commit -m "sync from github"
