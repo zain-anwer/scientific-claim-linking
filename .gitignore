@@ -11,9 +11,10 @@ __pycache__/
 learning_notes.txt      
 todo_list.txt           
 
-# indexes
-indexes/
 models/
+indexes/embeddings.npy
+indexes/faiss.index
+indexes/uids.pkl
 
 # frontend crap
 
