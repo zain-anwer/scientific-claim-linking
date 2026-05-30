@@ -18,8 +18,8 @@ from utils.semantic_search import get_top_semantic_results
 
 # generating dynamic paths through pathlib
 BASE_DIR = Path(__file__).resolve().parent
-TEST_PATH = BASE_DIR / 'data/cord19_test_zip'
-CSV_PATH = BASE_DIR / 'data/cord19_metadata.zip'
+TEST_PATH = str(BASE_DIR / 'data/cord19_test_zip')
+CSV_PATH = str(BASE_DIR / 'data/cord19_metadata.zip')
 
 # constructing query set
 df = pd.read_csv(TEST_PATH)

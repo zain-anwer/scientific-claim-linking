@@ -17,7 +17,7 @@ UMAP_METRIC = 'cosine'
 N_CLUSTERS = 10
 
 BASE_DIR = Path(__file__).resolve().parent
-embeddings = np.load(BASE_DIR / 'indexes/embeddings.npy')
+embeddings = np.load(str(BASE_DIR / 'indexes/embeddings.npy'))
 
 reducer = umap.UMAP(
     n_components = UMAP_COMPONENTS,

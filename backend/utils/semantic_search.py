@@ -3,9 +3,9 @@ from pathlib import Path
 from preprocessing.embeddings import generate_embeddings
 
 BASE_DIR = Path(__file__).resolve().parent
-IDX_PATH = BASE_DIR.parent / 'cord19_indexes'
+IDX_PATH = BASE_DIR.parent / 'indexes/faiss.index'
 
-faiss_idx = faiss.read_index(str(IDX_PATH / 'faiss.index'))
+faiss_idx = faiss.read_index(str(IDX_PATH))
 
 def get_top_semantic_results(query : str, n : int):
 

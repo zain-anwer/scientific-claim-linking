@@ -12,7 +12,7 @@ from pathlib import Path
 from scispacy.linking import EntityLinker
 from preprocessing.query_normalization import normalize_query
 
-PIPELINE_PATH = Path(__file__).resolve().parent.parent / 'pipelines/scispacy_linker_pipeline'
+# PIPELINE_PATH = Path(__file__).resolve().parent.parent / 'pipelines/scispacy_linker_pipeline'
 
 """
 if not PIPELINE_PATH.exists():

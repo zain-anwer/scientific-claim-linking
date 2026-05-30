@@ -12,8 +12,8 @@ sys.path.insert(0, str(BASE_DIR.parent))  # adds the parent directory to path
 import pickle
 import numpy as np
 
-IDX_PATH = BASE_DIR.parent / 'indexes'
-with open(IDX_PATH / 'bm25.index.pkl','rb') as f:
+IDX_PATH = str(BASE_DIR.parent / 'indexes/bm25.index.pkl')
+with open(IDX_PATH,'rb') as f:
     bm25_idx = pickle.load(f)
 
 def get_top_bm25_results(query : str, n : int):

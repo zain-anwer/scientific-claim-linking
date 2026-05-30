@@ -9,8 +9,8 @@ def build_bm25_index():
     # the file path is relative to the cwd
     # what a load of crap :)
 
-    INDEX_FOLDER = BASE_DIR.parent/'indexes/'
-    INDEX_FILE   = BASE_DIR.parent/'indexes/bm25.index.pkl'
+    INDEX_FOLDER = str(BASE_DIR.parent/'indexes/')
+    INDEX_FILE   = str(BASE_DIR.parent/'indexes/bm25.index.pkl')
 
 
     # documents have already been parsed and cleaned in the dataset collection stage

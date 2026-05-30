@@ -1,6 +1,7 @@
 # ----------------- INITIAL CONFIG --------------------- #
 
 CHOICE = input('Use cross encoder reranking ? (yes/no): ')
+K = int(input('Number of queries to process : '))
 
 # ------------------------------------------------------ #
 
@@ -19,8 +20,8 @@ from utils.semantic_search import get_top_semantic_results
 
 # generating dynamic paths through pathlib
 BASE_DIR = Path(__file__).resolve().parent
-TEST_PATH = BASE_DIR / 'data/test.zip'
-CSV_PATH = BASE_DIR / 'data/cleaned_metadata.zip'
+TEST_PATH = str(BASE_DIR / 'data/test.zip')
+CSV_PATH = str(BASE_DIR / 'data/cleaned_metadata.zip')
 
 # constructing query set
 test_df = pd.read_csv(TEST_PATH)
@@ -37,6 +38,9 @@ mrr_list = []
 
 
 for i,query in enumerate(query_set):
+
+    if i >= K:
+        break
 
     # normalization happens behind the hood
     expanded_query = query_expansion(query)

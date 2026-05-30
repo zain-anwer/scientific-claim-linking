@@ -5,8 +5,8 @@ import json
 
 BASE_DIR = Path(__file__).resolve().parent
 
-CSV_PATH   = BASE_DIR / 'cleaned_metadata.csv'
-TRAIN_PATH = BASE_DIR / 'train.csv'
+CSV_PATH   = str(BASE_DIR / 'cleaned_metadata.csv')
+TRAIN_PATH = str(BASE_DIR / 'train.csv')
 
 df     = pd.read_csv(CSV_PATH)
 tp_df  = pd.read_csv(TRAIN_PATH)

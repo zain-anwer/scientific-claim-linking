@@ -21,7 +21,7 @@ from pathlib import Path
 from preprocessing.embeddings import generate_embeddings
 
 BASE_DIR = Path(__file__).resolve().parent
-INDEX_DIR = BASE_DIR.parent / "indexes"
+INDEX_DIR = str(BASE_DIR.parent / "indexes")
 
 def build_faiss_index():
 
