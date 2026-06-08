@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+// Component to display the metrics and reliability index for a given claim based on the retrieved papers and their stances
 const S = {
   wrap: { maxWidth: 720, margin: "0 auto" },
   box: {
@@ -33,7 +33,7 @@ const S = {
     padding: "1px 5px", fontFamily: "monospace", fontSize: 11, color: "#64748b",
   },
 };
-
+// SearchComponent definition that renders the search input box, handles user input, and triggers the search action when the form is submitted. It also displays a loading state and instructions for using the search box.
 export default function SearchComponent({ onSearch, loading, submitted }) {
   const [input, setInput]   = useState("");
   const [focused, setFocused] = useState(false);

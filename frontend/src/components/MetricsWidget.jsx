@@ -1,10 +1,11 @@
+// Component to display the metrics and reliability index for a given claim based on the retrieved papers and their stances
 function normalize(stance) {
   const s = (stance || "").toLowerCase().trim();
   if (s === "supports" || s === "support") return "support";
   if (s === "refutes"  || s === "refute")  return "refute";
   return "neutral";
 }
-
+// Styles for the MetricsWidget component
 const S = {
   card: {
     background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16,
@@ -49,7 +50,7 @@ const COLORS = {
   mid:    { text: "#b45309", bg: "#fffbeb", border: "#fde68a", muted: "#fcd34d" },
   low:    { text: "#be123c", bg: "#fff1f2", border: "#fecdd3", muted: "#fda4af" },
 };
-
+//  MetricsWidget component definition that calculates the reliability index and displays the supporting, neutral, and refuting paper counts along with a visual representation of the evidence distribution
 export default function MetricsWidget({ results, query }) {
   const counts = results.reduce(
     (a, p) => { const s = normalize(p.stance); a[s]++; return a; },

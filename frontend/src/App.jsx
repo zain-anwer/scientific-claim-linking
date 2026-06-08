@@ -5,8 +5,9 @@ import PaperCard       from "./components/PaperCard";
 import Loader          from "./components/Loader";
 import { useClaimSearch } from "./hooks/useClaimSearch";
 
+// Styles for the application components
 const S = {
-  page:    { minHeight: "100vh", background: "#f8fafc" },
+  page:    { minHeight: "100vh", background: "#f8fafc" },                
   header:  {
     borderBottom: "1px solid #e2e8f0", background: "rgba(255,255,255,0.9)",
     backdropFilter: "blur(8px)", position: "sticky", top: 0, zIndex: 10,
@@ -51,7 +52,7 @@ const S = {
   emptyIcon: { fontSize: 36, marginBottom: 8 },
   stack: { display: "flex", flexDirection: "column", gap: 10, paddingBottom: 64 },
 };
-
+//  Main App component that renders the entire application UI
 export default function App() {
   const [query, setQuery] = useState("");
   const { results, loading, error, submitted, search } = useClaimSearch();

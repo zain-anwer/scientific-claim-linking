@@ -1,3 +1,4 @@
+// Loader component that displays the loading steps and progress while querying scientific literature
 const STEPS = [
   { icon: "✦", label: "Expanding query…"         },
   { icon: "◈", label: "Running BM25 retrieval…"  },
@@ -6,7 +7,7 @@ const STEPS = [
   { icon: "◇", label: "Cross-encoder reranking…" },
   { icon: "▲", label: "NLI claim verification…"  },
 ];
-
+// Styles for the Loader component
 const S = {
   wrap:  { padding: "48px 0", display: "flex", flexDirection: "column", alignItems: "center", gap: 28 },
   steps: { width: 360, display: "flex", flexDirection: "column", gap: 10 },
@@ -16,7 +17,7 @@ const S = {
   label: { fontSize: 11, color: "#94a3b8", width: 170, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" },
   foot:  { fontSize: 12, color: "#94a3b8" },
 };
-
+//  Loader component definition that renders the loading steps and progress bars
 export default function Loader() {
   return (
     <div style={S.wrap}>

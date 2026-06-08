@@ -1,12 +1,12 @@
 import { useState } from "react";
-
+// Component to display the metrics and reliability index for a given claim based on the retrieved papers and their stances
 function normalize(stance) {
   const s = (stance || "").toLowerCase().trim();
   if (s === "supports" || s === "support") return "support";
   if (s === "refutes"  || s === "refute")  return "refute";
   return "neutral";
 }
-
+// Styles for the MetricsWidget component
 const STANCE = {
   support: { label: "Supports", bg: "#f0fdf4", text: "#15803d", border: "#bbf7d0",
     icon: <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5"
@@ -18,7 +18,7 @@ const STANCE = {
     icon: <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5"
       strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24"><path d="M20 12H4"/></svg> },
 };
-
+// MetricsWidget component definition that calculates the reliability index and displays the supporting, neutral, and refuting paper counts along with a visual representation of the evidence distribution
 const S = {
   card: {
     background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16,
@@ -71,7 +71,7 @@ const S = {
 };
 
 const TRUNCATE = 240;
-
+// PaperCard component definition that renders the information of a single paper including its title, abstract, relevance score, and a link to view the paper if available. It also handles the logic for expanding/collapsing long abstracts and displays the stance of the paper towards the claim.
 export default function PaperCard({ paper }) {
   const [expanded, setExpanded] = useState(false);
   const [hovered,  setHovered]  = useState(false);

@@ -1,11 +1,12 @@
 import { useState } from "react";
-
+// Custom hook to manage the state and logic for searching claims
 export function useClaimSearch() {
   const [results,   setResults]   = useState([]);
   const [loading,   setLoading]   = useState(false);
   const [error,     setError]     = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
+// Function to perform the search by sending a POST request to the backend API
   const search = async (query) => {
     if (!query.trim()) return;
     setLoading(true);
