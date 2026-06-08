@@ -10,6 +10,7 @@ import pandas as pd
 from pathlib import Path
 
 from preprocessing.query_expansion import query_expansion
+from preprocessing.query_normalization import normalize_query_semantic_search
 from evaluation_metrics.reciprocal_rank import reciprocal_rank
 from postprocessing.reciprocal_rank_fusion import reciprocal_rank_fusion
 from postprocessing.reranking import cross_encoder_reranking
@@ -40,11 +41,14 @@ for i,query in enumerate(query_set):
     if i >= K:
         break
 
-    expanded_query = query_expansion(query)
-    
+    bm25_query = query_expansion(query)
+    semantic_query = normalize_query_semantic_search(query)
+
     # using expanded query in bm25 only
-    list1 = get_top_bm25_results(expanded_query,100,BM25_INDEX)
-    list2 = get_top_semantic_results(query,100,FAISS_INDEX)
+    list1 = get_top_bm25_results(bm25_query,100,BM25_INDEX)
+
+    # using specific normalization on dense search query
+    list2 = get_top_semantic_results(semantic_query,100,FAISS_INDEX)
     
     # combing results through RFF
     idx_list = reciprocal_rank_fusion(list1,list2)

@@ -20,6 +20,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # -------------------------- INTERNAL LOGIC RELATED IMPORTS ----------------------- #
 
 from preprocessing.query_expansion import query_expansion
+from preprocessing.query_normalization import normalize_query_semantic_search
 from postprocessing.reciprocal_rank_fusion import reciprocal_rank_fusion
 from postprocessing.reranking import cross_encoder_reranking
 from postprocessing.fact_checking import claim_verification
@@ -105,9 +106,10 @@ def query_results(body: QueryRequest):
         raise HTTPException(status_code=422, detail="Post text must not be empty.")
 
     # retrieval through both indexes
-    expanded = query_expansion(post)
-    list1 = get_top_bm25_results(expanded, 100)
-    list2 = get_top_semantic_results(post, 100)
+    bm25_query = query_expansion(post)
+    semantic_query = normalize_query_semantic_search(post)
+    list1 = get_top_bm25_results(bm25_query, 100)
+    list2 = get_top_semantic_results(semantic_query, 100)
 
     # combining results through RFF
     idx_list = reciprocal_rank_fusion(list1, list2)

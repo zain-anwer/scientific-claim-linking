@@ -10,7 +10,7 @@ import pandas as pd
 from pathlib import Path
 
 from preprocessing.query_expansion import query_expansion
-from preprocessing.query_normalization import normalize_query
+from preprocessing.query_normalization import normalize_query_semantic_search
 from evaluation_metrics.reciprocal_rank import reciprocal_rank
 from postprocessing.reciprocal_rank_fusion import reciprocal_rank_fusion
 from postprocessing.reranking import cross_encoder_reranking
@@ -42,11 +42,14 @@ for i,query in enumerate(query_set):
     if i >= K:
         break
 
-    # normalization happens behind the hood
-    expanded_query = query_expansion(query)
-    
+    # normalization happens before query expansion to remove noise
+    bm25_query = query_expansion(query)
+
+    # applying specific normalization (emoji/URL/unicode/elongation/etc)
+    semantic_query = normalize_query_semantic_search(query)
+
     # using expanded query in bm25 only
-    list1 = get_top_bm25_results(expanded_query,100)
+    list1 = get_top_bm25_results(bm25_query,100)
 
     # use unexpanded query in semantic search
     list2 = get_top_semantic_results(query,100)

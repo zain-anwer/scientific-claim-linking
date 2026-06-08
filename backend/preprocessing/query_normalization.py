@@ -6,7 +6,6 @@ Since the query in question is a social media post we propose the following
 -> removing elongation (e.g. "I lovee")
 
 """
-
 import unicodedata
 import emoji
 import re
@@ -69,17 +68,23 @@ SOCIAL_STOPWORDS = {
     "wild", "mind", "blown", "guys", "everyone",
 }
 
+# generating stopwords for BM25 indexing
 ALL_STOPWORDS = ENGLISH_STOPWORDS | SOCIAL_STOPWORDS
 
 def clean_unicode_and_layout(text: str) -> str:
-    # Normalize unicode (handles hidden formatting tokens)
+    
+    # normalize unicode (handles hidden formatting tokens)
     text = unicodedata.normalize('NFKC', text)
-    # Strip URLs
+    
+    # strip urls
     text = re.sub(r'https?://\S+|www\.\S+', '', text)
-    # Strip Twitter/X style artifacts like pipes used for layout
+    
+    # strip twitter formatting like pipes and stuff
     text = re.sub(r'\|', ' ', text)
-    # Narrow no-break space (\u202f) and other exotic whitespace to regular space
+    
+    # I have no idea what this does
     text = re.sub(r'[\u00a0\u202f\u2009\u200b\u2060]', ' ', text)
+    
     return text
 
 def remove_emojis(text: str) -> str:
@@ -117,10 +122,13 @@ def remove_elongation(query: str) -> str:
 
     return "".join(modified)
 
-def normalize_query(query: str) -> list:
+def normalize_query_bm25_search(query: str) -> list:
 
     # converting everything to lowercase
     query = query.lower()
+
+    # unicode normalization for maximum character comparison
+    query = clean_unicode_and_layout(query)
 
     # removing hashtags and mentions
     query = re.sub(r'[#@]\w+', '', query)
@@ -182,7 +190,14 @@ def normalize_query(query: str) -> list:
 
     return tokens
 
+def normalize_query_semantic_search(query: str) -> str:
+    query = clean_unicode_and_layout(query)
+    query = remove_elongation(query)
+    query = remove_emojis(query)
+    return query
+
+
 if __name__ == '__main__':
-    print(normalize_query("ngl twin COVID vaccines workkkk 💉🦠🔥 yay!"))
-    print(normalize_query("Turns out ~67% efficacy after two weeks – even severe cases down ~77% 😷 #VaccinesWork"))
-    print(normalize_query("Whoa—by 2050 we could have 13.8M Americans 65+ with Alzheimer's 😱 #Aging"))
+     print(normalize_query_bm25_search("ngl twin COVID vaccines workkkk 💉🦠🔥 yay!"))
+     print(normalize_query_bm25_search("Turns out ~67% efficacy after two weeks – even severe cases down ~77% 😷 #VaccinesWork"))
+     print(normalize_query_bm25_search("Whoa—by 2050 we could have 13.8M Americans 65+ with Alzheimer's 😱 #Aging"))

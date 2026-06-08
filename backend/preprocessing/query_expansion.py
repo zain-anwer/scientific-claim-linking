@@ -1,16 +1,16 @@
 # ------------------ INITIAL CONFIG ----------------------- #
 
+# mesh performs better in evaluation scripts hence mesh it is
 # CHOICE = input("Enter linker type (umls or mesh) : ")
 
 # --------------------------------------------------------- # 
-
 
 # tokenization -> medical entity selection (NER) -> synonym matchup (linking)
 
 import spacy 
 from pathlib import Path
 from scispacy.linking import EntityLinker
-from preprocessing.query_normalization import normalize_query
+from preprocessing.query_normalization import normalize_query_bm25_search
 
 # PIPELINE_PATH = Path(__file__).resolve().parent.parent / 'pipelines/scispacy_linker_pipeline'
 
@@ -43,7 +43,7 @@ def query_expansion(query : str) -> str:
     # query = remove_emojis(query)
     # query = clean_unicode_and_layout(query)
  
-    query = " ".join(normalize_query(query))
+    query = " ".join(normalize_query_bm25_search(query))
  
     print('Modified query prior expansion: ',query)
 
